@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScrollTrigger Pin Effect</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff7e5f, #feb47b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            color: #e0e0ff;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .instruction {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px auto;
+            max-width: 600px;
+            border-left: 4px solid #ff7e5f;
+            font-size: 1.1rem;
+        }
+        
+        .scroll-section {
+            position: relative;
+            height: 300vh;
+            margin: 100px 0;
+            background: #000;
+            box-sizing: border-box;
+        }
+        
+        .pinned-element {
+          position: relative;
+            top: 5%;
+            left: 50%;
+            transform: translate(-50%, -5%);
+            max-width: 700px;
+            height: 400px;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+        }
+        
+        .pinned-element h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .pinned-element p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            max-width: 600px;
+        }
+        
+        .scroll-items {
+            position: relative;
+            height: 100%;
+        }
+        
+        .scroll-item {
+            position: absolute;
+            width: 300px;
+            height: 200px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(100px);
+            z-index: 20;
+        }
+        
+        .item-1 { background: linear-gradient(45deg, #ff9a9e, #fad0c4); left: 10%; top: 20%; }
+        .item-2 { background: linear-gradient(45deg, #a1c4fd, #c2e9fb); left: 70%; top: 25%; }
+        .item-3 { background: linear-gradient(45deg, #ffecd2, #fcb69f); left: 20%; top: 60%; }
+        .item-4 { background: linear-gradient(45deg, #84fab0, #8fd3f4); left: 65%; top: 65%; }
+        .item-5 { background: linear-gradient(45deg, #d4fc79, #96e6a1); left: 45%; top: 85%; }
+        
+        .explanation {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 80px 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .explanation h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #ff7e5f;
+        }
+        
+        .explanation p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        
+        .code-block {
+            background: #1e1e2e;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #a0a0c0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .pinned-element { width: 90%; height: 300px; }
+            .scroll-item { width: 250px; height: 150px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>ScrollTrigger Pin Effect</h1>
+            <p class="subtitle">A modern scrolling experience where elements overlap a pinned section</p>
+            <div class="instruction">
+                <p>⬇️ Scroll down to see the effect ⬇️</p>
+                <p>The blue section will pin in the center while colored cards scroll over it</p>
+            </div>
+        </header>
+        
+        <div class="scroll-section">
+            <div class="pinned-element">
+                <h2>Pinned Content</h2>
+                <p>This section remains fixed in the center while you scroll. Notice how other elements smoothly pass over this container, creating an engaging visual effect.</p>
+            </div>
+            
+            <div class="scroll-items">
+                <div class="scroll-item item-1">Card 1</div>
+                <div class="scroll-item item-2">Card 2</div>
+                <div class="scroll-item item-3">Card 3</div>
+                <div class="scroll-item item-4">Card 4</div>
+                <div class="scroll-item item-5">Card 5</div>
+            </div>
+        </div>
+        
+        <div class="explanation">
+            <h3>How This Effect Works</h3>
+            <p>This animation uses GSAP's ScrollTrigger plugin to create a modern scrolling experience:</p>
+            
+            <div class="code-block">
+
+            </div>
+            
+            <p>The blue section is pinned in the center of the viewport while the user scrolls through a designated section. During this scrolling period, colorful cards animate into view, moving upward and overlapping the pinned element.</p>
+            <p>This technique is excellent for:</p>
+            <ul>
+                <li>Product feature showcases</li>
+                <li>Step-by-step tutorials</li>
+                <li>Interactive storytelling</li>
+                <li>Portfolio highlights</li>
+            </ul>
+        </div>
+        
+        <footer>
+            <p>Created with GSAP ScrollTrigger | Modern Scroll Effects</p>
+        </footer>
+    </div>
+
+    <script>
+
+        // Initialize ScrollTrigger
+gsap.registerPlugin(ScrollTrigger);
+
+// Pin the main element
+ScrollTrigger.create({
+  trigger: ".scroll-section",
+  start: "top top",
+  // end: "bottom bottom",
+  pin: ".pinned-element",
+  pinSpacing: false
+});
+
+// Animate scrolling items
+gsap.utils.toArray(".scroll-item").forEach((item, i) => {
+  gsap.fromTo(item,
+    { opacity: 0, y: 100 },
+    {
+      opacity: 1,
+      y: -100,
+      scrollTrigger: {
+        trigger: ".scroll-section",
+        start: "top center",
+        // end: "bottom center",
+        scrub: 1
+      }
+    }
+  );
+});
+    </script>
+</body>
+</html>
