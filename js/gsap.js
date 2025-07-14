@@ -65,17 +65,13 @@ const tl2 = gsap.timeline({
       // markers: true,          
     }
   });
-  tl2.from(".hero-down-left div,.hero-down-left p, .hero-down-left", { 
+  tl2.from(".hero-down-left div,.hero-down-left p, .hero-down-left, .hero-down-right div", { 
     y: 100, 
     opacity: 0, 
-    stagger: 0.2 
+    stagger: 0.1,
+    duration: 0.2
 });
-tl2.from(".hero-down-right div", { 
-    y: 100, 
-    opacity: 0, 
-    stagger: 0.2 
-});
-  
+
 
 function findClosestEdge(mouseX, mouseY, width, height) {
     const topEdgeDist = Math.pow(mouseX - width / 2, 2) + Math.pow(mouseY, 2);
