@@ -12104,6 +12104,12 @@ p {
   padding-left: 90px;
   padding-right: 90px;
 }
+@media screen and (max-width: 1024px) {
+  .container, .padding-left-right {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
 
 ul,
 ol {

@@ -128,6 +128,11 @@ letter-spacing: -1%;
 .container, .padding-left-right {
   padding-left: 90px;
   padding-right: 90px;
+  @media screen and (max-width: 1024px) {
+    padding-left: 30px;
+    padding-right: 30px;
+    
+  }
 }
 
 ul,
